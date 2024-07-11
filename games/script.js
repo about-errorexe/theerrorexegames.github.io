@@ -73,6 +73,7 @@ function moveProjectile(projectile) {
         if (posY >= gameContainer.offsetHeight - you.offsetHeight - 10) {
             clearInterval(interval);
             if (currentProjectile === projectile) {
+                gameContainer.removeChild(projectile);
                 currentProjectile = null;
             }
             gameOver();
