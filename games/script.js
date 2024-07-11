@@ -1,8 +1,8 @@
 // DOM-Elemente abrufen
 const startButton = document.getElementById('startButton');
-const backgroundMusic = document.getElementById('backgroundMusic');
 const gameContainer = document.getElementById('gameContainer');
 const footer = document.getElementById('footer');
+const backgroundMusic = document.getElementById('backgroundMusic');
 
 // Spielvariablen
 let score = 0;
