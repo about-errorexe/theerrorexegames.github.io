@@ -10,6 +10,13 @@ let gameSpeed = 2000;  // Geschwindigkeit der Projektil-Würfe in Millisekunden
 let projectiles = [];  // Array zum Speichern der aktiven Projektile
 let gameStarted = false;
 
+// Spieler-Element erstellen und anzeigen
+const you = document.createElement('img');
+you.id = 'you';
+you.src = 'you.png';
+you.classList.add('player');
+gameContainer.appendChild(you);
+
 // Event Listener für den Start-Button hinzufügen
 startButton.addEventListener('click', startGame);
 
@@ -44,7 +51,7 @@ function createProjectile() {
     const projectile = document.createElement('img'); // Neues Bild-Element erstellen
     projectile.src = `${randomType}.png`; // Bildquelle setzen
     projectile.classList.add('projectile'); // Klasse hinzufügen
-    projectile.style.top = '0'; // Anfangsposition oben setzen
+    projectile.style.top = '-50px'; // Anfangsposition oben (außerhalb des Bildschirms)
     projectile.style.left = `${Math.random() * (gameContainer.offsetWidth - 50)}px`; // Zufällige horizontale Position
     return projectile;
 }
@@ -52,7 +59,7 @@ function createProjectile() {
 // Funktion, um ein Projektil zu bewegen
 function moveProjectile(projectile) {
     const speed = 5 + score / 5; // Geschwindigkeit erhöht sich mit dem Score
-    let posY = 0; // Anfangsposition oben
+    let posY = -50; // Anfangsposition oben (außerhalb des Bildschirms)
     const interval = setInterval(() => {
         if (!gameStarted) {
             clearInterval(interval); // Intervall stoppen, wenn das Spiel nicht mehr läuft
@@ -74,7 +81,6 @@ function moveProjectile(projectile) {
 
 // Funktion, um Kollisionen zu überprüfen
 function checkCollision(projectile) {
-    const you = document.getElementById('you'); // Spieler-Element abrufen
     const youRect = you.getBoundingClientRect(); // Spieler-Rechteck abrufen
     const projectileRect = projectile.getBoundingClientRect(); // Projektil-Rechteck abrufen
 
