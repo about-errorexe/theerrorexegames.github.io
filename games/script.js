@@ -2,7 +2,7 @@ document.getElementById('startButton').addEventListener('click', startGame);
 
 let gameContainer;
 let you;
-let currentProjectiles = [];
+let currentProjectile = null;
 let projectileIndex = 0;
 let gameInterval;
 
@@ -39,14 +39,19 @@ function startGame() {
 }
 
 function throwProjectile() {
-    let projectile = document.createElement('img');
-    projectile.classList.add('projectile');
-    projectile.src = projectileIndex < 4 ? 'xbox.png' : 'pc.png';
-    projectile.style.top = '50px';
-    projectile.style.right = '100px';
-    gameContainer.appendChild(projectile);
-    currentProjectiles.push(projectile);
-    moveProjectile(projectile);
+    if (currentProjectile) {
+        alert('Game Over');
+        window.location.href = 'about:blank';
+        return;
+    }
+
+    currentProjectile = document.createElement('img');
+    currentProjectile.classList.add('projectile');
+    currentProjectile.src = projectileIndex < 4 ? 'xbox.png' : 'pc.png';
+    currentProjectile.style.top = '50px';
+    currentProjectile.style.right = '100px';
+    gameContainer.appendChild(currentProjectile);
+    moveProjectile(currentProjectile);
 
     projectileIndex++;
     if (projectileIndex >= 9) {
@@ -72,9 +77,9 @@ function moveProjectile(projectile) {
 }
 
 function dodge() {
-    if (currentProjectiles.length > 0) {
-        let projectile = currentProjectiles.shift();
-        gameContainer.removeChild(projectile);
+    if (currentProjectile) {
+        gameContainer.removeChild(currentProjectile);
+        currentProjectile = null;
     }
 }
 
