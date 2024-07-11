@@ -6,6 +6,7 @@ let currentProjectile = null;
 let gameInterval;
 let speed = 100;  // Initial speed (milliseconds per move)
 let score = 0;
+let speedIncrement = 0.95;  // Speed multiplier to gradually increase difficulty
 
 function startGame() {
     document.getElementById('startButton').classList.add('hidden');
@@ -54,18 +55,20 @@ function throwProjectile() {
     moveProjectile(currentProjectile);
 
     score++;
-    speed = Math.max(20, speed - 5);  // Increase speed, but don't go below 20ms
+    speed *= speedIncrement;  // Increase speed
 }
 
 function moveProjectile(projectile) {
     let posY = parseInt(projectile.style.top);
     const interval = setInterval(() => {
+        posY += 10;
+        projectile.style.top = `${posY}px`;
+
         if (posY >= gameContainer.offsetHeight - you.offsetHeight - 10) {
             clearInterval(interval);
             checkCollision(projectile);
         } else {
-            posY += 10;
-            projectile.style.top = `${posY}px`;
+            checkCollision(projectile);
         }
     }, speed);
 }
@@ -87,6 +90,8 @@ function checkCollision(projectile) {
         projRect.top < youRect.bottom &&
         projRect.bottom > youRect.top
     ) {
+        gameOver();
+    } else if (projRect.bottom >= youRect.bottom) {
         gameOver();
     }
 }
