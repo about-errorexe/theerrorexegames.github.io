@@ -42,8 +42,8 @@ function startGame() {
 }
 
 function throwProjectile() {
-    if (currentProjectile) {
-        gameOver();
+    if (gameOverFlag) {
+        clearInterval(gameInterval);
         return;
     }
 
@@ -70,14 +70,14 @@ function moveProjectile(projectile) {
         posY += 10;
         projectile.style.top = `${posY}px`;
 
-        checkCollision(projectile);
-
         if (posY >= gameContainer.offsetHeight - you.offsetHeight - 10) {
             clearInterval(interval);
             if (currentProjectile === projectile) {
                 currentProjectile = null;
             }
             gameOver();
+        } else {
+            checkCollision(projectile);
         }
     }, speed);
 }
@@ -104,9 +104,7 @@ function checkCollision(projectile) {
 }
 
 function gameOver() {
-    if (!gameOverFlag) {
-        gameOverFlag = true;
-        alert(`You Lost! Score: ${score}`);
-        window.location.reload();
-    }
+    gameOverFlag = true;
+    alert(`You Lost! Score: ${score}`);
+    window.location.reload();
 }
