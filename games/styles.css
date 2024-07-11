@@ -15,6 +15,12 @@ body {
     display: none;
 }
 
+#startButton {
+    padding: 20px 40px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
 #gameContainer {
     position: relative;
     width: 100%;
