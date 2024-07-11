@@ -7,6 +7,7 @@ let gameInterval;
 let speed = 100;  // Initial speed (milliseconds per move)
 let score = 0;
 let speedIncrement = 0.95;  // Speed multiplier to gradually increase difficulty
+let gameOverFlag = false;  // Flag to check if the game is over
 
 function startGame() {
     document.getElementById('startButton').classList.add('hidden');
@@ -14,7 +15,7 @@ function startGame() {
     backgroundMusic.play();
     
     const message = document.createElement('p');
-    message.innerText = 'Bill Gates want to fight';
+    message.innerText = 'Bill Gates wants to fight';
     document.body.appendChild(message);
 
     gameContainer = document.createElement('div');
@@ -61,6 +62,11 @@ function throwProjectile() {
 function moveProjectile(projectile) {
     let posY = parseInt(projectile.style.top);
     const interval = setInterval(() => {
+        if (gameOverFlag) {
+            clearInterval(interval);
+            return;
+        }
+
         posY += 10;
         projectile.style.top = `${posY}px`;
 
@@ -77,7 +83,7 @@ function moveProjectile(projectile) {
 }
 
 function dodge() {
-    if (currentProjectile) {
+    if (currentProjectile && !gameOverFlag) {
         gameContainer.removeChild(currentProjectile);
         currentProjectile = null;
     }
@@ -98,6 +104,9 @@ function checkCollision(projectile) {
 }
 
 function gameOver() {
-    alert(`You Lost! Score: ${score}`);
-    window.location.reload();
+    if (!gameOverFlag) {
+        gameOverFlag = true;
+        alert(`You Lost! Score: ${score}`);
+        window.location.reload();
+    }
 }
