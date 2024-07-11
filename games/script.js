@@ -3,8 +3,9 @@ document.getElementById('startButton').addEventListener('click', startGame);
 let gameContainer;
 let you;
 let currentProjectile = null;
-let projectileIndex = 0;
 let gameInterval;
+let speed = 100;  // Initial speed (milliseconds per move)
+let score = 0;
 
 function startGame() {
     document.getElementById('startButton').classList.add('hidden');
@@ -40,27 +41,20 @@ function startGame() {
 
 function throwProjectile() {
     if (currentProjectile) {
-        alert('Game Over');
-        window.location.href = 'about:blank';
+        gameOver();
         return;
     }
 
     currentProjectile = document.createElement('img');
     currentProjectile.classList.add('projectile');
-    currentProjectile.src = projectileIndex < 4 ? 'xbox.png' : 'pc.png';
+    currentProjectile.src = score % 5 < 4 ? 'xbox.png' : 'pc.png';
     currentProjectile.style.top = '50px';
     currentProjectile.style.right = '100px';
     gameContainer.appendChild(currentProjectile);
     moveProjectile(currentProjectile);
 
-    projectileIndex++;
-    if (projectileIndex >= 9) {
-        clearInterval(gameInterval);
-        setTimeout(() => {
-            alert('You won!');
-            location.reload();
-        }, 500);
-    }
+    score++;
+    speed = Math.max(20, speed - 5);  // Increase speed, but don't go below 20ms
 }
 
 function moveProjectile(projectile) {
@@ -73,7 +67,7 @@ function moveProjectile(projectile) {
             posY += 10;
             projectile.style.top = `${posY}px`;
         }
-    }, 100);
+    }, speed);
 }
 
 function dodge() {
@@ -93,7 +87,11 @@ function checkCollision(projectile) {
         projRect.top < youRect.bottom &&
         projRect.bottom > youRect.top
     ) {
-        alert('Game Over');
-        window.location.href = 'about:blank';
+        gameOver();
     }
+}
+
+function gameOver() {
+    alert(`You Lost! Score: ${score}`);
+    window.location.reload();
 }
