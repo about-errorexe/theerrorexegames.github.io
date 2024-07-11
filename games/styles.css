@@ -37,6 +37,10 @@ body {
 }
 
 .player {
-    width: 50px;  /* Anpassen der Breite des Spielerbildes */
+    position: absolute;
+    bottom: 0;
+    left: 50%; /* Spieler horizontal zentrieren */
+    transform: translateX(-50%); /* Horizontal zentrieren */
+    width: 50px; /* Breite des Spielerbildes */
     height: auto; /* Automatische Höhe beibehalten */
 }
