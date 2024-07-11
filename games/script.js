@@ -45,7 +45,7 @@ function createProjectile() {
     projectile.src = `${randomType}.png`; // Bildquelle setzen
     projectile.classList.add('projectile'); // Klasse hinzufügen
     projectile.style.top = '0'; // Anfangsposition oben setzen
-    projectile.style.left = `${Math.random() * (gameContainer.offsetWidth - 100)}px`; // Zufällige horizontale Position
+    projectile.style.left = `${Math.random() * (gameContainer.offsetWidth - 50)}px`; // Zufällige horizontale Position
     return projectile;
 }
 
