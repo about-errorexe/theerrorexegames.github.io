@@ -41,6 +41,7 @@ function startGame() {
 function throwProjectile() {
     const projectile = createProjectile(); // Projektil erstellen
     gameContainer.appendChild(projectile); // Projektil dem Spielcontainer hinzufügen
+    projectiles.push(projectile); // Projektil zum Array hinzufügen
     moveProjectile(projectile); // Projektil bewegen
 }
 
@@ -51,71 +52,4 @@ function createProjectile() {
     const projectile = document.createElement('img'); // Neues Bild-Element erstellen
     projectile.src = `${randomType}.png`; // Bildquelle setzen
     projectile.classList.add('projectile'); // Klasse hinzufügen
-    projectile.style.top = '-50px'; // Anfangsposition oben (außerhalb des Bildschirms)
-    projectile.style.left = `${Math.random() * (gameContainer.offsetWidth - 50)}px`; // Zufällige horizontale Position
-    return projectile;
-}
-
-// Funktion, um ein Projektil zu bewegen
-function moveProjectile(projectile) {
-    const speed = 5 + score / 5; // Geschwindigkeit erhöht sich mit dem Score
-    let posY = -50; // Anfangsposition oben (außerhalb des Bildschirms)
-    const interval = setInterval(() => {
-        if (!gameStarted) {
-            clearInterval(interval); // Intervall stoppen, wenn das Spiel nicht mehr läuft
-            return;
-        }
-
-        posY += speed; // Geschwindigkeit erhöhen
-        projectile.style.top = `${posY}px`; // Position aktualisieren
-
-        if (posY > gameContainer.offsetHeight) { // Wenn das Projektil den Boden erreicht
-            gameContainer.removeChild(projectile); // Projektil aus dem Spielcontainer entfernen
-            projectiles = projectiles.filter(p => p !== projectile); // Projektil aus dem Array entfernen
-            clearInterval(interval); // Intervall stoppen
-        } else {
-            checkCollision(projectile); // Kollision überprüfen
-        }
-    }, 20); // Intervallzeit in Millisekunden
-}
-
-// Funktion, um Kollisionen zu überprüfen
-function checkCollision(projectile) {
-    const youRect = you.getBoundingClientRect(); // Spieler-Rechteck abrufen
-    const projectileRect = projectile.getBoundingClientRect(); // Projektil-Rechteck abrufen
-
-    if (
-        projectileRect.left < youRect.right &&
-        projectileRect.right > youRect.left &&
-        projectileRect.top < youRect.bottom &&
-        projectileRect.bottom > youRect.top
-    ) {
-        endGame(); // Spiel beenden, wenn Kollision festgestellt wird
-    }
-}
-
-// Event Listener für Klicks auf den Bildschirm hinzufügen (Ausweichen)
-document.addEventListener('click', dodge);
-
-// Funktion, um auszuweichen
-function dodge() {
-    if (!gameStarted) return; // Rückkehr, wenn das Spiel nicht gestartet ist
-
-    // Ausführung für jedes aktive Projektil im Array
-    projectiles.forEach(projectile => {
-        checkCollision(projectile); // Kollision überprüfen
-    });
-}
-
-// Funktion, um das Spiel zu beenden
-function endGame() {
-    gameStarted = false; // Spiel gestoppt markieren
-    projectiles.forEach(projectile => gameContainer.removeChild(projectile)); // Alle Projektile entfernen
-    projectiles = []; // Projektile-Array leeren
-
-    // Spielanleitung aktualisieren und Spiel-Ende anzeigen
-    footer.innerText = `You Lost! Score: ${score}`;
-    setTimeout(() => {
-        window.location.reload(); // Seite neu laden nach kurzer Verzögerung
-    }, 2000); // 2 Sekunden Verzögerung
-}
+    projectile.style.top = '-50px'; // Anfangsposition
