@@ -64,13 +64,14 @@ function moveProjectile(projectile) {
         posY += 10;
         projectile.style.top = `${posY}px`;
 
-        checkCollision(projectile);
-
         if (posY >= gameContainer.offsetHeight - you.offsetHeight - 10) {
             clearInterval(interval);
             if (currentProjectile === projectile) {
                 currentProjectile = null;
             }
+            gameOver();
+        } else {
+            checkCollision(projectile);
         }
     }, speed);
 }
@@ -100,10 +101,3 @@ function gameOver() {
     alert(`You Lost! Score: ${score}`);
     window.location.reload();
 }
-
-// Frequent collision check
-setInterval(() => {
-    if (currentProjectile) {
-        checkCollision(currentProjectile);
-    }
-}, 10);
