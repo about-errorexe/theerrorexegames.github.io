@@ -52,7 +52,7 @@ gameArea.addEventListener('touchend', (e) => {
 // Function to create obstacles
 function createObstacle() {
     const obstacle = document.createElement('img');
-    obstacle.src = 'steine.jpeg';
+    obstacle.src = 'stein.png';
     obstacle.classList.add('obstacle');
     obstacle.style.top = Math.floor(Math.random() * (gameArea.clientHeight - 30)) + 'px';
     obstacle.style.left = gameArea.clientWidth + 'px';
@@ -62,7 +62,7 @@ function createObstacle() {
 // Function to create coins
 function createCoin() {
     const coin = document.createElement('img');
-    coin.src = 'geld.jpeg';
+    coin.src = 'geld.png';
     coin.classList.add('coin');
     coin.style.top = Math.floor(Math.random() * (gameArea.clientHeight - 30)) + 'px';
     coin.style.left = gameArea.clientWidth + 'px';
