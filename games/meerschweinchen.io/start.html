@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meerschweinchen.io</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="controls">
+        <label for="controlType">Steuerungsart wählen:</label>
+        <select id="controlType">
+            <option value="keyboard">Pfeiltasten</option>
+            <option value="swipe">Wischen</option>
+        </select>
+    </div>
+    <div id="gameArea">
+        <img id="player" src="player.jpeg" alt="Meerschweinchen">
+    </div>
+    <div id="scoreBoard">
+        <p>Score: <span id="score">0</span></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
