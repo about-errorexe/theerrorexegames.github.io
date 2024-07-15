@@ -15,6 +15,7 @@
         }
         .loading-container {
             text-align: center;
+            display: none;
         }
         .loading-gif {
             width: 50px; /* Größe der GIF anpassen */
@@ -22,12 +23,22 @@
     </style>
 </head>
 <body>
-    <div class="loading-container">
-        <img src="loading.GIF" alt="Loading..." class="loading-gif">
-        <audio autoplay loop>
+    <div>
+        <button id="startButton">Los</button>
+    </div>
+    <div class="loading-container" id="loadingContainer">
+        <img src="loading.gif" alt="Loading..." class="loading-gif">
+        <audio id="loadingAudio" loop>
             <source src="loading.m4a" type="audio/m4a">
             Ihr Browser unterstützt das Audioelement nicht.
         </audio>
     </div>
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            document.getElementById('loadingContainer').style.display = 'block';
+            document.getElementById('loadingAudio').play();
+        });
+    </script>
 </body>
 </html>
