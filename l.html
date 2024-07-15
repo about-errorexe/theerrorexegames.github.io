@@ -37,7 +37,10 @@
     <script>
         document.getElementById('startButton').addEventListener('click', function() {
             document.getElementById('loadingContainer').style.display = 'block';
-            document.getElementById('loadingAudio').play();
+            var audio = document.getElementById('loadingAudio');
+            audio.play().catch(error => {
+                console.error("Audio konnte nicht abgespielt werden:", error);
+            });
         });
     </script>
 </body>
